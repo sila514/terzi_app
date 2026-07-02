@@ -1,0 +1,110 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+model User {
+  id           Int        @id @default(autoincrement())
+  name         String
+  email        String     @unique
+  passwordHash String
+  role         Role       @default(EMPLOYEE)
+  createdAt    DateTime   @default(now())
+  employee     Employee?
+}
+
+enum Role {
+  ADMIN
+  EMPLOYEE
+}
+
+model Customer {
+  id         Int      @id @default(autoincrement())
+  name       String
+  phone      String?
+  email      String?
+  height     Float?
+  weight     Float?
+  chest      Float?
+  waist      Float?
+  hip        Float?
+  shoulder   Float?
+  armLength  Float?
+  legLength  Float?
+  notes      String?
+  createdAt  DateTime @default(now())
+  orders     Order[]
+}
+
+model Employee {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @unique
+  user      User     @relation(fields: [userId], references: [id])
+  name      String
+  phone     String?
+  createdAt DateTime @default(now())
+  orders    Order[]
+}
+
+model Order {
+  id           Int         @id @default(autoincrement())
+  customerId   Int
+  customer     Customer    @relation(fields: [customerId], references: [id])
+  employeeId   Int?
+  employee     Employee?   @relation(fields: [employeeId], references: [id])
+  description  String?
+  modelNotes   String?
+  status       OrderStatus @default(RECEIVED)
+  price        Float
+  depositPaid  Float       @default(0)
+  deliveryDate DateTime?
+  deliveredAt  DateTime?
+  photoUrl     String?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  payments     Payment[]
+}
+
+enum OrderStatus {
+  RECEIVED
+  CUTTING
+  SEWING
+  FITTING
+  DELIVERED
+}
+
+model Payment {
+  id      Int         @id @default(autoincrement())
+  orderId Int
+  order   Order       @relation(fields: [orderId], references: [id])
+  amount  Float
+  type    PaymentType
+  note    String?
+  paidAt  DateTime    @default(now())
+}
+
+enum PaymentType {
+  DEPOSIT
+  BALANCE
+  EXTRA
+}
+
+model Expense {
+  id          Int             @id @default(autoincrement())
+  category    ExpenseCategory
+  amount      Float
+  description String?
+  expenseDate DateTime
+  createdAt   DateTime        @default(now())
+}
+
+enum ExpenseCategory {
+  RENT
+  FABRIC
+  LABOR
+  UTILITY
+  OTHER
+}
