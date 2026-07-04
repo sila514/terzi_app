@@ -48,18 +48,15 @@ Kullanıcı arayüzünü geliştiriyor.
 
 ---
 
-## 📱 Uygulama Sayfaları
-
 | Sayfa | Açıklama |
 |-------|----------|
-| 🏠 Ana Ekran | Bugün teslim edilecekler, aktif işler |
-| 👤 Müşteriler | Müşteri arama, ölçüler, geçmiş işler, borç durumu |
-| 📋 Sipariş Takibi | Siparişlerin aşama aşama takibi |
-| 👥 Çalışanlar | Çalışan ve sipariş eşleşmesi |
-| 💰 Muhasebe | Gelir, gider, fatura, aylık rapor |
-| 📷 Fotoğraf | Sipariş başına kumaş ve prova fotoğrafları |
-
----
+| 🏠 Dashboard | Bugün teslim edilecekler, aktif işler, bildirimler |
+| 👤 Müşteri & Sipariş | Müşteri arama, ölçüler, kalem kalem iş listesi, borç durumu |
+| 👥 Çalışan Yönetimi | Çalışan kartları, sipariş atama |
+| 💰 Muhasebe & Rapor | Gelir/gider grafiği, nakit akışı, ödenmemiş borçlar |
+| 📅 Randevu Sistemi | Haftalık takvim, günlük randevu listesi |
+| 🖼 Sipariş Galerisi | Sipariş başına fotoğraflar |
+| ⚙️ Genel Ayarlar | Profil, işletme bilgileri, bildirim tercihleri |
 
 ## 🚀 Kurulum
 
