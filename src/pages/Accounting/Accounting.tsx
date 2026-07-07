@@ -1,0 +1,213 @@
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import { TrendingUp, TrendingDown, AlertCircle, Plus, X } from 'lucide-react'
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
+
+const api = axios.create({ baseURL: 'http://localhost:3000/api' })
+api.interceptors.request.use(c => { c.headers.Authorization = `Bearer ${localStorage.getItem('token')}`; return c })
+
+export default function Accounting() {
+  const [summary, setSummary] = useState<any>(null)
+  const [monthly, setMonthly] = useState<any[]>([])
+  const [expenses, setExpenses] = useState<any[]>([])
+  const [showForm, setShowForm] = useState(false)
+  const [activeTab, setActiveTab] = useState('unpaid')
+  const [form, setForm] = useState({ category: 'OTHER', amount: '', description: '', expenseDate: '' })
+
+  const loadAll = () => {
+    api.get('/reports/summary').then(r => setSummary(r.data)).catch(console.error)
+    api.get('/reports/monthly?year=2026').then(r => setMonthly(r.data)).catch(console.error)
+    api.get('/expenses').then(r => setExpenses(r.data)).catch(console.error)
+  }
+
+  useEffect(() => { loadAll() }, [])
+
+  const handleSaveExpense = async () => {
+    try {
+      if (!form.amount || !form.expenseDate) {
+        alert('Tutar ve tarih zorunlu!')
+        return
+      }
+      await api.post('/expenses', {
+        category: form.category,
+        amount: Number(form.amount),
+        description: form.description || null,
+        expenseDate: new Date(form.expenseDate).toISOString()
+      })
+      setShowForm(false)
+      setForm({ category: 'OTHER', amount: '', description: '', expenseDate: '' })
+      loadAll()
+    } catch (error: any) {
+      alert('Hata: ' + (error.response?.data?.detail || error.message))
+    }
+  }
+
+  const tabs = [
+    { key: 'unpaid', label: 'Ödenmemişler' },
+    { key: 'monthly', label: 'Bu Ayın Cirosu' },
+    { key: 'expenses', label: 'Giderler' },
+  ]
+
+  return (
+    <div className="p-4 md:p-8 mt-12 md:mt-0">
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <h1 className="text-xl md:text-2xl font-bold text-gray-800">Muhasebe & Raporlama</h1>
+          <p className="text-gray-500 text-sm mt-1">Finansal Özet</p>
+        </div>
+        <button onClick={() => setShowForm(true)} className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-3 md:px-4 py-2 md:py-2.5 rounded-xl text-sm font-medium">
+          <Plus size={18} /> <span className="hidden md:inline">Gider Ekle</span>
+        </button>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
+        <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+          <div className="flex items-center gap-2 mb-2">
+            <TrendingUp size={18} className="text-green-500" />
+            <p className="text-sm text-gray-500">Toplam Gelir</p>
+          </div>
+          <p className="text-2xl font-bold text-green-600">{summary?.totalRevenue?.toLocaleString('tr-TR') || 0} ₺</p>
+        </div>
+        <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+          <div className="flex items-center gap-2 mb-2">
+            <TrendingDown size={18} className="text-red-500" />
+            <p className="text-sm text-gray-500">Toplam Gider</p>
+          </div>
+          <p className="text-2xl font-bold text-red-600">{summary?.totalExpenses?.toLocaleString('tr-TR') || 0} ₺</p>
+        </div>
+        <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+          <div className="flex items-center gap-2 mb-2">
+            <AlertCircle size={18} className="text-yellow-500" />
+            <p className="text-sm text-gray-500">Bekleyen Borç</p>
+          </div>
+          <p className="text-2xl font-bold text-yellow-600">{summary?.totalUnpaid?.toLocaleString('tr-TR') || 0} ₺</p>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-2xl p-4 md:p-6 shadow-sm border border-gray-100 mb-6 md:mb-8">
+        <h2 className="font-semibold text-gray-800 mb-4">Gelir & Gider Grafiği</h2>
+        <ResponsiveContainer width="100%" height={200}>
+          <AreaChart data={monthly}>
+            <defs>
+              <linearGradient id="gelir" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#7c3aed" stopOpacity={0.2} />
+                <stop offset="95%" stopColor="#7c3aed" stopOpacity={0} />
+              </linearGradient>
+              <linearGradient id="gider" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#ef4444" stopOpacity={0.2} />
+                <stop offset="95%" stopColor="#ef4444" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+            <XAxis dataKey="month" tick={{ fontSize: 10 }} />
+            <YAxis tick={{ fontSize: 10 }} />
+            <Tooltip formatter={(val: any) => `${val?.toLocaleString('tr-TR')} ₺`} />
+            <Area type="monotone" dataKey="revenue" stroke="#7c3aed" fill="url(#gelir)" strokeWidth={2} name="Gelir" />
+            <Area type="monotone" dataKey="expenses" stroke="#ef4444" fill="url(#gider)" strokeWidth={2} name="Gider" />
+          </AreaChart>
+        </ResponsiveContainer>
+      </div>
+
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
+        <div className="flex border-b border-gray-100 overflow-x-auto">
+          {tabs.map(t => (
+            <button key={t.key} onClick={() => setActiveTab(t.key)}
+              className={`px-4 md:px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${activeTab === t.key ? 'border-b-2 border-purple-600 text-purple-600' : 'text-gray-500 hover:text-gray-700'}`}>
+              {t.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="p-4 md:p-6">
+          {activeTab === 'unpaid' && (
+            <div className="space-y-3">
+              {!summary?.unpaidOrders?.length ? (
+                <p className="text-gray-400 text-sm text-center py-4">Ödenmemiş sipariş yok 🎉</p>
+              ) : (
+                summary.unpaidOrders.map((order: any) => (
+                  <div key={order.id} className="flex items-center justify-between p-4 bg-yellow-50 rounded-xl">
+                    <div>
+                      <p className="font-medium text-gray-800 text-sm">{order.customer?.name}</p>
+                      <p className="text-xs text-gray-500">{order.description}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-semibold text-red-600 text-sm">{(order.price - order.depositPaid)?.toLocaleString('tr-TR')} ₺</p>
+                      <p className="text-xs text-gray-400">Kalan borç</p>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          )}
+
+          {activeTab === 'monthly' && (
+            <div className="text-center py-4">
+              <p className="text-3xl font-bold text-purple-600 mb-1">{summary?.monthlyRevenue?.toLocaleString('tr-TR') || 0} ₺</p>
+              <p className="text-sm text-gray-500">Bu ay tahsil edilen toplam tutar</p>
+            </div>
+          )}
+
+          {activeTab === 'expenses' && (
+            <div className="space-y-3">
+              {!expenses.length ? (
+                <p className="text-gray-400 text-sm text-center py-4">Henüz gider kaydı yok</p>
+              ) : (
+                expenses.map((exp: any) => (
+                  <div key={exp.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                    <div>
+                      <p className="font-medium text-gray-800 text-sm">{exp.description || exp.category}</p>
+                      <p className="text-xs text-gray-500">{new Date(exp.expenseDate).toLocaleDateString('tr-TR')}</p>
+                    </div>
+                    <p className="font-semibold text-red-600 text-sm">-{exp.amount?.toLocaleString('tr-TR')} ₺</p>
+                  </div>
+                ))
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {showForm && (
+        <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-lg font-bold text-gray-800">Yeni Gider</h2>
+              <button onClick={() => setShowForm(false)}><X size={20} className="text-gray-400" /></button>
+            </div>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs font-medium text-gray-600 mb-1">Kategori</label>
+                <select value={form.category} onChange={e => setForm({ ...form, category: e.target.value })}
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
+                  <option value="RENT">Kira</option>
+                  <option value="FABRIC">Kumaş</option>
+                  <option value="LABOR">İşçilik</option>
+                  <option value="UTILITY">Fatura</option>
+                  <option value="OTHER">Diğer</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-gray-600 mb-1">Tutar (₺)</label>
+                <input type="number" value={form.amount} onChange={e => setForm({ ...form, amount: e.target.value })}
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-gray-600 mb-1">Açıklama</label>
+                <input value={form.description} onChange={e => setForm({ ...form, description: e.target.value })}
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-gray-600 mb-1">Tarih</label>
+                <input type="date" value={form.expenseDate} onChange={e => setForm({ ...form, expenseDate: e.target.value })}
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500" />
+              </div>
+            </div>
+            <button onClick={handleSaveExpense} className="w-full mt-6 bg-purple-600 hover:bg-purple-700 text-white font-medium py-2.5 rounded-xl transition-all">
+              Kaydet
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}

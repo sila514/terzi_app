@@ -1,0 +1,106 @@
+import { useEffect, useState, useRef } from 'react'
+import axios from 'axios'
+import { Camera, Upload } from 'lucide-react'
+
+const api = axios.create({ baseURL: 'http://localhost:3000/api' })
+api.interceptors.request.use(c => { c.headers.Authorization = `Bearer ${localStorage.getItem('token')}`; return c })
+
+export default function Gallery() {
+  const [orders, setOrders] = useState<any[]>([])
+  const [filter, setFilter] = useState('all')
+  const [uploading, setUploading] = useState(false)
+  const [selectedOrder, setSelectedOrder] = useState('')
+  const fileRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    api.get('/orders').then(r => setOrders(r.data)).catch(console.error)
+  }, [])
+
+  const withPhotos = orders.filter(o => o.photoUrl)
+  const filtered = filter === 'all' ? withPhotos : withPhotos.filter(o => o.id === Number(filter))
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file || !selectedOrder) return alert('Sipariş seçin!')
+    setUploading(true)
+    try {
+      const formData = new FormData()
+      formData.append('photo', file)
+      const res = await api.post('/upload', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      })
+      await api.patch(`/orders/${selectedOrder}/status`, { photoUrl: res.data.url })
+      const ordersRes = await api.get('/orders')
+      setOrders(ordersRes.data)
+    } catch (error) {
+      alert('Yükleme hatası!')
+    } finally {
+      setUploading(false)
+    }
+  }
+
+  return (
+    <div className="p-4 md:p-8 mt-12 md:mt-0">
+      <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
+        <div>
+          <h1 className="text-xl md:text-2xl font-bold text-gray-800">Sipariş Fotoğrafları</h1>
+          <p className="text-gray-500 text-sm mt-1">{withPhotos.length} fotoğraf</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <select value={selectedOrder} onChange={e => setSelectedOrder(e.target.value)}
+            className="flex-1 md:flex-none border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
+            <option value="">Sipariş seç...</option>
+            {orders.map(o => (
+              <option key={o.id} value={o.id}>#{o.id} - {o.customer?.name}</option>
+            ))}
+          </select>
+          <button onClick={() => fileRef.current?.click()} disabled={uploading}
+            className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2.5 rounded-xl text-sm font-medium transition-all disabled:opacity-50">
+            <Upload size={18} />
+            <span className="hidden md:inline">{uploading ? 'Yükleniyor...' : 'Fotoğraf Ekle'}</span>
+          </button>
+          <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleUpload} />
+        </div>
+      </div>
+
+      <div className="flex gap-2 mb-6 flex-wrap">
+        <button onClick={() => setFilter('all')}
+          className={`px-3 md:px-4 py-1.5 md:py-2 rounded-full text-sm font-medium transition-all ${filter === 'all' ? 'bg-purple-600 text-white' : 'bg-white text-gray-600 border border-gray-200'}`}>
+          Tümü
+        </button>
+        {withPhotos.map(o => (
+          <button key={o.id} onClick={() => setFilter(String(o.id))}
+            className={`px-3 md:px-4 py-1.5 md:py-2 rounded-full text-sm font-medium transition-all ${filter === String(o.id) ? 'bg-purple-600 text-white' : 'bg-white text-gray-600 border border-gray-200'}`}>
+            #{o.id}
+          </button>
+        ))}
+      </div>
+
+      {filtered.length === 0 ? (
+        <div className="bg-white rounded-2xl p-12 text-center shadow-sm border border-gray-100">
+          <Camera size={48} className="text-gray-300 mx-auto mb-4" />
+          <p className="text-gray-400">Henüz fotoğraf eklenmemiş</p>
+          <p className="text-sm text-gray-300 mt-1">Sipariş seçip fotoğraf ekleyebilirsiniz</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {filtered.map(order => (
+            <div key={order.id} className="relative group rounded-2xl overflow-hidden bg-white shadow-sm border border-gray-100">
+              <img src={order.photoUrl} alt={order.description} className="w-full h-48 md:h-56 object-cover" />
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all flex items-end">
+                <div className="p-4 text-white">
+                  <p className="font-medium">#{order.id}</p>
+                  <p className="text-sm">{order.customer?.name}</p>
+                  <p className="text-xs opacity-75">{order.description}</p>
+                </div>
+              </div>
+              <div className="absolute top-3 left-3">
+                <span className="bg-purple-600 text-white text-xs px-2 py-1 rounded-full font-medium">#{order.id}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
