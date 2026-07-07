@@ -18,6 +18,7 @@ export const getOrders = async (req: Request, res: Response) => {
     });
     res.json(orders);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Sunucu hatası", detail: String(error) });
   }
 };
@@ -31,6 +32,7 @@ export const getOrder = async (req: Request, res: Response) => {
     if (!order) return res.status(404).json({ error: "Sipariş bulunamadı" });
     res.json(order);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Sunucu hatası", detail: String(error) });
   }
 };
@@ -53,6 +55,7 @@ export const createOrder = async (req: Request, res: Response) => {
     });
     res.status(201).json(order);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Sunucu hatası", detail: String(error) });
   }
 };
@@ -66,22 +69,24 @@ export const updateOrder = async (req: Request, res: Response) => {
     });
     res.json(order);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Sunucu hatası", detail: String(error) });
   }
 };
 
 export const updateOrderStatus = async (req: Request, res: Response) => {
   try {
-    const { status } = req.body;
+    const { status, photoUrl } = req.body;
     const order = await prisma.order.update({
       where: { id: Number(req.params.id) },
       data: {
-        status,
-        ...(status === "DELIVERED" ? { deliveredAt: new Date() } : {})
+        ...(status ? { status, ...(status === "DELIVERED" ? { deliveredAt: new Date() } : {}) } : {}),
+        ...(photoUrl ? { photoUrl } : {})
       }
     });
     res.json(order);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Sunucu hatası", detail: String(error) });
   }
 };
@@ -91,6 +96,7 @@ export const deleteOrder = async (req: Request, res: Response) => {
     await prisma.order.delete({ where: { id: Number(req.params.id) } });
     res.json({ message: "Sipariş silindi" });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Sunucu hatası", detail: String(error) });
   }
 };
@@ -106,6 +112,7 @@ export const getOverdueOrders = async (req: Request, res: Response) => {
     });
     res.json(orders);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Sunucu hatası", detail: String(error) });
   }
 };

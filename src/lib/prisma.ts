@@ -1,10 +1,7 @@
 import { PrismaClient } from "@prisma/client";
-import dotenv from "dotenv";
-
-dotenv.config();
 
 const prisma = new PrismaClient({
-  datasourceUrl: process.env.DATABASE_URL,
+  datasourceUrl: "postgresql://postgres.qmffcecgimlnwaiuuaax:Barvion24.!@aws-1-eu-central-1.pooler.supabase.com:5432/postgres",
 });
 
 export default prisma;

@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import bcrypt from "bcryptjs";
 import prisma from "../lib/prisma";
 
 export const getEmployees = async (req: Request, res: Response) => {
@@ -14,6 +15,7 @@ export const getEmployees = async (req: Request, res: Response) => {
     });
     res.json(employees);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Sunucu hatası", detail: String(error) });
   }
 };
@@ -32,18 +34,29 @@ export const getEmployee = async (req: Request, res: Response) => {
     if (!employee) return res.status(404).json({ error: "Çalışan bulunamadı" });
     res.json(employee);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Sunucu hatası", detail: String(error) });
   }
 };
 
 export const createEmployee = async (req: Request, res: Response) => {
   try {
-    const { name, phone, userId } = req.body;
-    const employee = await prisma.employee.create({
-      data: { name, phone, userId: Number(userId) }
+    const { name, phone } = req.body;
+
+    const email = `${name.toLowerCase().replace(/\s+/g, ".")}.${Date.now()}@terzi.com`;
+    const passwordHash = await bcrypt.hash("123456", 10);
+
+    const user = await prisma.user.create({
+      data: { name, email, passwordHash, role: "EMPLOYEE" }
     });
+
+    const employee = await prisma.employee.create({
+      data: { name, phone: phone || null, userId: user.id }
+    });
+
     res.status(201).json(employee);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Sunucu hatası", detail: String(error) });
   }
 };
@@ -56,6 +69,7 @@ export const updateEmployee = async (req: Request, res: Response) => {
     });
     res.json(employee);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Sunucu hatası", detail: String(error) });
   }
 };
@@ -65,6 +79,7 @@ export const deleteEmployee = async (req: Request, res: Response) => {
     await prisma.employee.delete({ where: { id: Number(req.params.id) } });
     res.json({ message: "Çalışan silindi" });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Sunucu hatası", detail: String(error) });
   }
 };
@@ -78,6 +93,7 @@ export const getEmployeeOrders = async (req: Request, res: Response) => {
     });
     res.json(orders);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Sunucu hatası", detail: String(error) });
   }
 };
