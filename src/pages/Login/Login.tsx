@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { Scissors, Ruler, Shirt, Wallet } from 'lucide-react'
+import { Scissors } from 'lucide-react'
 
 export default function Login() {
   const navigate = useNavigate()
@@ -35,129 +35,93 @@ export default function Login() {
     }
   }
 
-  const features = [
-    { icon: Ruler, text: 'Müşteri ölçü kartları tek yerde' },
-    { icon: Shirt, text: 'Sipariş ve teslim takibi' },
-    { icon: Wallet, text: 'Gelir, gider ve muhasebe raporu' },
-  ]
-
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row">
-      {/* Sol Panel - Marka Tanıtımı */}
-      <div className="relative lg:w-1/2 bg-gradient-to-br from-purple-900 via-purple-800 to-purple-950 text-white flex flex-col justify-center px-8 sm:px-14 lg:px-20 py-16 lg:py-0 overflow-hidden">
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-purple-600/30 rounded-full blur-3xl" />
-        <div className="absolute -bottom-32 -left-16 w-96 h-96 bg-fuchsia-500/20 rounded-full blur-3xl" />
-
-        <div className="relative max-w-md mx-auto lg:mx-0">
-          <div className="flex items-center gap-3 mb-10">
-            <div className="w-12 h-12 bg-white/10 backdrop-blur rounded-2xl flex items-center justify-center border border-white/20">
-              <Scissors size={24} className="text-white" />
-            </div>
-            <div>
-              <p className="font-bold text-xl">TerziPro</p>
-              <p className="text-sm text-purple-300">Atölye Yönetim Sistemi</p>
-            </div>
+    <div className="min-h-screen bg-gradient-to-br from-[#1e1b4b] via-[#2e1065] to-[#1e1b4b] flex items-center justify-center px-4 py-12">
+      <div className="w-full max-w-md">
+        {/* Logo & Başlık */}
+        <div className="flex flex-col items-center mb-8 text-center">
+          <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-purple-900/50 mb-4">
+            <Scissors size={28} className="text-white" />
           </div>
-
-          <h1 className="text-3xl sm:text-4xl font-bold leading-tight mb-5">
-            Atölyeni tek ekrandan yönet.
-          </h1>
-          <p className="text-purple-200 text-base sm:text-lg mb-12 leading-relaxed">
-            Müşteriler, siparişler, çalışanlar ve muhasebe — hepsi TerziPro'da bir arada.
-            Kağıt defterlere veda et.
-          </p>
-
-          <div className="space-y-5">
-            {features.map(({ icon: Icon, text }) => (
-              <div key={text} className="flex items-center gap-4">
-                <div className="w-10 h-10 shrink-0 bg-white/10 rounded-xl flex items-center justify-center border border-white/10">
-                  <Icon size={18} className="text-purple-200" />
-                </div>
-                <p className="text-purple-100 text-sm sm:text-base">{text}</p>
-              </div>
-            ))}
-          </div>
+          <h1 className="text-2xl font-bold text-white">TerziPro</h1>
+          <p className="text-purple-300 text-sm mt-1">Atölye Yönetim Sistemi</p>
         </div>
-      </div>
 
-      {/* Sağ Panel - Form */}
-      <div className="lg:w-1/2 bg-gray-50 flex items-center justify-center px-6 sm:px-12 py-16">
-        <div className="w-full max-w-md">
-          <div className="lg:hidden flex items-center gap-3 mb-8 justify-center">
-            <div className="w-10 h-10 bg-purple-600 rounded-xl flex items-center justify-center">
-              <Scissors size={20} className="text-white" />
-            </div>
-            <div>
-              <p className="font-bold text-gray-800">TerziPro</p>
-              <p className="text-xs text-gray-500">Atölye Yönetim Sistemi</p>
-            </div>
+        {/* Kart */}
+        <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
+          {/* Sekmeler */}
+          <div className="flex p-2 gap-2">
+            <button
+              onClick={() => { setIsRegister(false); setError('') }}
+              className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+                !isRegister ? 'bg-gray-100 text-gray-800' : 'text-gray-400 hover:text-gray-600'
+              }`}
+            >
+              Giriş Yap
+            </button>
+            <button
+              onClick={() => { setIsRegister(true); setError('') }}
+              className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+                isRegister ? 'bg-gray-100 text-gray-800' : 'text-gray-400 hover:text-gray-600'
+              }`}
+            >
+              Kayıt Ol
+            </button>
           </div>
 
-          <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-xl border border-gray-100">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">
-              {isRegister ? 'Kayıt Ol' : 'Giriş Yap'}
-            </h2>
-            <p className="text-gray-500 mb-8">
-              {isRegister ? 'Atölyen için yeni bir hesap oluştur' : 'Hesabına giriş yaparak devam et'}
-            </p>
-
+          <div className="px-7 pb-7 pt-2">
             {error && (
-              <div className="bg-red-50 text-red-600 p-4 rounded-xl mb-6 text-sm">{error}</div>
+              <div className="bg-red-50 text-red-600 p-3 rounded-xl mb-4 text-sm">{error}</div>
             )}
 
-            <div className="space-y-5">
+            <div className="space-y-4">
               {isRegister && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Ad Soyad</label>
+                  <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Ad Soyad</label>
                   <input
                     value={name}
                     onChange={e => setName(e.target.value)}
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
                     placeholder="Ad Soyad"
                   />
                 </div>
               )}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">Email</label>
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">E-Posta</label>
                 <input
                   type="email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
                   placeholder="ornek@email.com"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">Şifre</label>
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Şifre</label>
                 <input
                   type="password"
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   onKeyDown={e => e.key === 'Enter' && handleSubmit()}
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
                   placeholder="••••••••"
                 />
               </div>
+
               <button
                 onClick={handleSubmit}
                 disabled={loading}
-                className="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-3.5 rounded-xl transition-all disabled:opacity-50 text-base"
+                className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-semibold py-3.5 rounded-xl transition-all disabled:opacity-50 shadow-lg shadow-purple-900/20 mt-2"
               >
                 {loading ? 'Bekleyin...' : isRegister ? 'Kayıt Ol' : 'Giriş Yap'}
               </button>
             </div>
-
-            <p className="text-center text-sm text-gray-500 mt-8">
-              {isRegister ? 'Zaten hesabın var mı?' : 'Hesabın yok mu?'}
-              <button
-                onClick={() => { setIsRegister(!isRegister); setError('') }}
-                className="text-purple-600 font-medium ml-1.5 hover:underline"
-              >
-                {isRegister ? 'Giriş Yap' : 'Kayıt Ol'}
-              </button>
-            </p>
           </div>
         </div>
+
+        <p className="text-center text-purple-300/70 text-xs mt-8">
+          TerziPro v1.0 · Tüm hakları saklıdır
+        </p>
       </div>
     </div>
   )
