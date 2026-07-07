@@ -27,14 +27,14 @@ export default function Sidebar() {
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
-      <div className="p-5 border-b border-purple-800">
+      <div className="p-6 border-b border-purple-800">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center">
-              <Scissors size={16} className="text-white" />
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 bg-purple-600 rounded-lg flex items-center justify-center">
+              <Scissors size={18} className="text-white" />
             </div>
             <div>
-              <p className="font-bold text-sm text-white">TerziPro</p>
+              <p className="font-bold text-base text-white">TerziPro</p>
               <p className="text-xs text-purple-300">Atölye Sistemi</p>
             </div>
           </div>
@@ -44,7 +44,7 @@ export default function Sidebar() {
         </div>
       </div>
 
-      <nav className="flex-1 p-3 space-y-1">
+      <nav className="flex-1 p-4 space-y-1.5">
         {links.map(({ to, label, icon: Icon }) => (
           <NavLink
             key={to}
@@ -52,22 +52,22 @@ export default function Sidebar() {
             end={to === '/'}
             onClick={() => setOpen(false)}
             className={({ isActive }) =>
-              `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all ${
+              `flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all ${
                 isActive
                   ? 'bg-purple-600 text-white font-medium'
                   : 'text-purple-200 hover:bg-purple-800'
               }`
             }
           >
-            <Icon size={18} />
+            <Icon size={19} />
             {label}
           </NavLink>
         ))}
       </nav>
 
-      <div className="p-3 border-t border-purple-800">
-        <div className="flex items-center gap-2 px-3 py-2 mb-1">
-          <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-sm font-bold text-white">
+      <div className="p-4 border-t border-purple-800">
+        <div className="flex items-center gap-3 px-3 py-2.5 mb-2">
+          <div className="w-9 h-9 bg-purple-600 rounded-full flex items-center justify-center text-sm font-bold text-white">
             {user.name?.charAt(0) || 'U'}
           </div>
           <div>
@@ -75,7 +75,7 @@ export default function Sidebar() {
             <p className="text-xs text-purple-300">{user.role === 'ADMIN' ? 'Yönetici' : 'Çalışan'}</p>
           </div>
         </div>
-        <button onClick={handleLogout} className="flex items-center gap-3 px-3 py-2 w-full text-purple-200 hover:bg-purple-800 rounded-lg text-sm transition-all">
+        <button onClick={handleLogout} className="flex items-center gap-3 px-4 py-2.5 w-full text-purple-200 hover:bg-purple-800 rounded-xl text-sm transition-all">
           <LogOut size={18} />
           Çıkış Yap
         </button>
@@ -106,7 +106,7 @@ export default function Sidebar() {
         </div>
       )}
 
-      <div className="hidden md:flex w-48 bg-purple-900 text-white flex-col h-screen">
+      <div className="hidden md:flex w-64 shrink-0 bg-purple-900 text-white flex-col h-screen">
         <SidebarContent />
       </div>
     </>

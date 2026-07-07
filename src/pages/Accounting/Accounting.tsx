@@ -49,44 +49,44 @@ export default function Accounting() {
   ]
 
   return (
-    <div className="p-4 md:p-8 mt-12 md:mt-0">
-      <div className="flex items-center justify-between mb-6">
+    <div className="p-6 md:p-10 mt-12 md:mt-0">
+      <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-xl md:text-2xl font-bold text-gray-800">Muhasebe & Raporlama</h1>
           <p className="text-gray-500 text-sm mt-1">Finansal Özet</p>
         </div>
-        <button onClick={() => setShowForm(true)} className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-3 md:px-4 py-2 md:py-2.5 rounded-xl text-sm font-medium">
+        <button onClick={() => setShowForm(true)} className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-4 md:px-5 py-2.5 md:py-3 rounded-xl text-sm font-medium">
           <Plus size={18} /> <span className="hidden md:inline">Gider Ekle</span>
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
-        <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-          <div className="flex items-center gap-2 mb-2">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-7 mb-8 md:mb-10">
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          <div className="flex items-center gap-2 mb-3">
             <TrendingUp size={18} className="text-green-500" />
             <p className="text-sm text-gray-500">Toplam Gelir</p>
           </div>
-          <p className="text-2xl font-bold text-green-600">{summary?.totalRevenue?.toLocaleString('tr-TR') || 0} ₺</p>
+          <p className="text-2xl md:text-3xl font-bold text-green-600">{summary?.totalRevenue?.toLocaleString('tr-TR') || 0} ₺</p>
         </div>
-        <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-          <div className="flex items-center gap-2 mb-2">
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          <div className="flex items-center gap-2 mb-3">
             <TrendingDown size={18} className="text-red-500" />
             <p className="text-sm text-gray-500">Toplam Gider</p>
           </div>
-          <p className="text-2xl font-bold text-red-600">{summary?.totalExpenses?.toLocaleString('tr-TR') || 0} ₺</p>
+          <p className="text-2xl md:text-3xl font-bold text-red-600">{summary?.totalExpenses?.toLocaleString('tr-TR') || 0} ₺</p>
         </div>
-        <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-          <div className="flex items-center gap-2 mb-2">
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          <div className="flex items-center gap-2 mb-3">
             <AlertCircle size={18} className="text-yellow-500" />
             <p className="text-sm text-gray-500">Bekleyen Borç</p>
           </div>
-          <p className="text-2xl font-bold text-yellow-600">{summary?.totalUnpaid?.toLocaleString('tr-TR') || 0} ₺</p>
+          <p className="text-2xl md:text-3xl font-bold text-yellow-600">{summary?.totalUnpaid?.toLocaleString('tr-TR') || 0} ₺</p>
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl p-4 md:p-6 shadow-sm border border-gray-100 mb-6 md:mb-8">
-        <h2 className="font-semibold text-gray-800 mb-4">Gelir & Gider Grafiği</h2>
-        <ResponsiveContainer width="100%" height={200}>
+      <div className="bg-white rounded-2xl p-5 md:p-7 shadow-sm border border-gray-100 mb-8 md:mb-10">
+        <h2 className="font-semibold text-gray-800 mb-5">Gelir & Gider Grafiği</h2>
+        <ResponsiveContainer width="100%" height={240}>
           <AreaChart data={monthly}>
             <defs>
               <linearGradient id="gelir" x1="0" y1="0" x2="0" y2="1">
@@ -112,20 +112,20 @@ export default function Accounting() {
         <div className="flex border-b border-gray-100 overflow-x-auto">
           {tabs.map(t => (
             <button key={t.key} onClick={() => setActiveTab(t.key)}
-              className={`px-4 md:px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${activeTab === t.key ? 'border-b-2 border-purple-600 text-purple-600' : 'text-gray-500 hover:text-gray-700'}`}>
+              className={`px-5 md:px-7 py-5 text-sm font-medium transition-all whitespace-nowrap ${activeTab === t.key ? 'border-b-2 border-purple-600 text-purple-600' : 'text-gray-500 hover:text-gray-700'}`}>
               {t.label}
             </button>
           ))}
         </div>
 
-        <div className="p-4 md:p-6">
+        <div className="p-5 md:p-7">
           {activeTab === 'unpaid' && (
             <div className="space-y-3">
               {!summary?.unpaidOrders?.length ? (
                 <p className="text-gray-400 text-sm text-center py-4">Ödenmemiş sipariş yok 🎉</p>
               ) : (
                 summary.unpaidOrders.map((order: any) => (
-                  <div key={order.id} className="flex items-center justify-between p-4 bg-yellow-50 rounded-xl">
+                  <div key={order.id} className="flex items-center justify-between p-5 bg-yellow-50 rounded-xl">
                     <div>
                       <p className="font-medium text-gray-800 text-sm">{order.customer?.name}</p>
                       <p className="text-xs text-gray-500">{order.description}</p>
@@ -153,7 +153,7 @@ export default function Accounting() {
                 <p className="text-gray-400 text-sm text-center py-4">Henüz gider kaydı yok</p>
               ) : (
                 expenses.map((exp: any) => (
-                  <div key={exp.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                  <div key={exp.id} className="flex items-center justify-between p-5 bg-gray-50 rounded-xl">
                     <div>
                       <p className="font-medium text-gray-800 text-sm">{exp.description || exp.category}</p>
                       <p className="text-xs text-gray-500">{new Date(exp.expenseDate).toLocaleDateString('tr-TR')}</p>
@@ -169,7 +169,7 @@ export default function Accounting() {
 
       {showForm && (
         <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl">
+          <div className="bg-white rounded-2xl p-7 w-full max-w-lg shadow-2xl">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-lg font-bold text-gray-800">Yeni Gider</h2>
               <button onClick={() => setShowForm(false)}><X size={20} className="text-gray-400" /></button>

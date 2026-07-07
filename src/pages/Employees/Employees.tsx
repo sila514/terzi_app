@@ -48,22 +48,22 @@ export default function Employees() {
   }
 
   return (
-    <div className="p-4 md:p-8 mt-12 md:mt-0">
-      <div className="flex items-center justify-between mb-6">
+    <div className="p-6 md:p-10 mt-12 md:mt-0">
+      <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-xl md:text-2xl font-bold text-gray-800">Çalışan Yönetimi</h1>
           <p className="text-gray-500 text-sm mt-1">{employees.length} çalışan</p>
         </div>
-        <button onClick={() => setShowForm(true)} className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-3 md:px-4 py-2 md:py-2.5 rounded-xl text-sm font-medium transition-all">
+        <button onClick={() => setShowForm(true)} className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-4 md:px-5 py-2.5 md:py-3 rounded-xl text-sm font-medium transition-all">
           <Plus size={18} /> <span className="hidden md:inline">Yeni Çalışan</span>
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-7">
         {employees.map(emp => (
-          <div key={emp.id} className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-11 h-11 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+          <div key={emp.id} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
                 {emp.name.charAt(0)}
               </div>
               <div>
@@ -71,14 +71,14 @@ export default function Employees() {
                 <p className="text-sm text-gray-500">{emp.phone || 'Telefon yok'}</p>
               </div>
             </div>
-            <div className="flex items-center gap-2 mb-4">
-              <span className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded-full font-medium">
+            <div className="flex items-center gap-2 mb-5">
+              <span className="text-xs bg-purple-100 text-purple-700 px-2.5 py-1.5 rounded-full font-medium">
                 {emp.orders?.length || 0} Aktif Sipariş
               </span>
             </div>
-            <div className="space-y-2">
+            <div className="space-y-2.5">
               {emp.orders?.map((order: any) => (
-                <div key={order.id} className="bg-gray-50 rounded-xl p-3">
+                <div key={order.id} className="bg-gray-50 rounded-xl p-4">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-xs text-purple-600 font-medium">#{order.id}</p>
@@ -101,7 +101,7 @@ export default function Employees() {
 
       {showForm && (
         <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl">
+          <div className="bg-white rounded-2xl p-7 w-full max-w-lg shadow-2xl">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-lg font-bold text-gray-800">Yeni Çalışan</h2>
               <button onClick={() => setShowForm(false)}><X size={20} className="text-gray-400" /></button>
