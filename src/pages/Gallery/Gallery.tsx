@@ -1,9 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
-import axios from 'axios'
 import { Camera, Upload } from 'lucide-react'
+import { api } from '../../lib/api'
 
-const api = axios.create({ baseURL: 'http://localhost:3000/api' })
-api.interceptors.request.use(c => { c.headers.Authorization = `Bearer ${localStorage.getItem('token')}`; return c })
 
 export default function Gallery() {
   const [orders, setOrders] = useState<any[]>([])

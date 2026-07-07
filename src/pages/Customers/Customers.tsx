@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 import { Search, Plus, X, ChevronRight, CreditCard, CheckCircle } from 'lucide-react'
+import { api } from '../../lib/api'
 
-const api = axios.create({ baseURL: 'http://localhost:3000/api' })
-api.interceptors.request.use(c => { c.headers.Authorization = `Bearer ${localStorage.getItem('token')}`; return c })
 
 export default function Customers() {
   const [customers, setCustomers] = useState<any[]>([])

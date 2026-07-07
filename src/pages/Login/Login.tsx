@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import { Scissors, AlertCircle } from 'lucide-react'
+import { api } from '../../lib/api'
 
 export default function Login() {
   const navigate = useNavigate()
@@ -17,13 +17,13 @@ export default function Login() {
     setError('')
     try {
       if (isRegister) {
-        await axios.post('http://localhost:3000/api/auth/register', { name, email, password, role: 'ADMIN' })
-        const res = await axios.post('http://localhost:3000/api/auth/login', { email, password })
+        await api.post('/auth/register', { name, email, password, role: 'ADMIN' })
+        const res = await api.post('/auth/login', { email, password })
         localStorage.setItem('token', res.data.token)
         localStorage.setItem('user', JSON.stringify(res.data.user))
         navigate('/')
       } else {
-        const res = await axios.post('http://localhost:3000/api/auth/login', { email, password })
+        const res = await api.post('/auth/login', { email, password })
         localStorage.setItem('token', res.data.token)
         localStorage.setItem('user', JSON.stringify(res.data.user))
         navigate('/')
