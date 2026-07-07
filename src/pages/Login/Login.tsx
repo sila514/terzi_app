@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { Scissors } from 'lucide-react'
+import { Scissors, AlertCircle } from 'lucide-react'
 
 export default function Login() {
   const navigate = useNavigate()
@@ -36,91 +36,105 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-plum-950 flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md">
+    <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#141B34] via-[#1E2148] to-[#20254E] px-4 py-12">
+      {/* Radial glow efektleri */}
+      <div className="pointer-events-none absolute top-[-10%] left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full bg-[#4F6BFF]/20 blur-[120px]" />
+      <div className="pointer-events-none absolute bottom-[-15%] right-[-10%] w-[500px] h-[500px] rounded-full bg-[#5B5FF7]/10 blur-[120px]" />
+
+      <div className="relative w-[92%] sm:w-full sm:max-w-[500px] flex flex-col items-center">
         {/* Logo & Başlık */}
-        <div className="flex flex-col items-center mb-8 text-center">
-          <div className="w-20 h-20 bg-gradient-to-br from-plum-500 to-plum-700 rounded-2xl flex items-center justify-center shadow-lg shadow-black/30 mb-5">
-            <Scissors size={34} className="text-white" />
+        <div className="flex flex-col items-center mb-9 text-center">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#5B5FF7] to-[#2E63E9] flex items-center justify-center shadow-lg shadow-[#2E63E9]/30 mb-5">
+            <Scissors size={28} className="text-white" />
           </div>
-          <h1 className="font-display text-3xl font-semibold text-white">TerziPro</h1>
-          <p className="text-plum-300 text-sm mt-1.5">Atölye Yönetim Sistemi</p>
+          <h1 className="text-[32px] leading-tight font-bold text-white tracking-tight">TerziPro</h1>
+          <p className="text-gray-400 text-sm mt-1.5">Atölye Yönetim Sistemi</p>
         </div>
 
         {/* Kart */}
-        <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
+        <div className="w-full bg-white rounded-[24px] shadow-[0_25px_70px_-20px_rgba(0,0,0,0.45)] border border-[#E5E7EB] p-10">
           {/* Sekmeler */}
-          <div className="flex p-2.5 gap-2">
+          <div className="flex bg-gray-100 rounded-2xl p-1.5 gap-1.5 mb-7">
             <button
               onClick={() => { setIsRegister(false); setError('') }}
-              className={`flex-1 py-3 rounded-xl text-sm font-semibold transition-all ${
-                !isRegister ? 'bg-ink-100 text-ink-900' : 'text-ink-400 hover:text-ink-600'
+              className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                !isRegister ? 'bg-white text-[#1F2937] shadow-sm' : 'text-gray-500 hover:text-gray-700'
               }`}
             >
               Giriş Yap
             </button>
             <button
               onClick={() => { setIsRegister(true); setError('') }}
-              className={`flex-1 py-3 rounded-xl text-sm font-semibold transition-all ${
-                isRegister ? 'bg-ink-100 text-ink-900' : 'text-ink-400 hover:text-ink-600'
+              className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                isRegister ? 'bg-white text-[#1F2937] shadow-sm' : 'text-gray-500 hover:text-gray-700'
               }`}
             >
               Kayıt Ol
             </button>
           </div>
 
-          <div className="px-8 pb-8 pt-3">
-            {error && (
-              <div className="bg-rose-50 text-rose-600 p-3 rounded-xl mb-4 text-sm">{error}</div>
-            )}
-
-            <div className="space-y-5">
-              {isRegister && (
-                <div>
-                  <label className="block text-xs font-semibold text-ink-500 uppercase tracking-wide mb-2">Ad Soyad</label>
-                  <input
-                    value={name}
-                    onChange={e => setName(e.target.value)}
-                    className="w-full border border-ink-200 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-plum-500"
-                    placeholder="Ad Soyad"
-                  />
-                </div>
-              )}
-              <div>
-                <label className="block text-xs font-semibold text-ink-500 uppercase tracking-wide mb-2">E-Posta</label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  className="w-full border border-ink-200 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-plum-500"
-                  placeholder="ornek@email.com"
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-semibold text-ink-500 uppercase tracking-wide mb-2">Şifre</label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  onKeyDown={e => e.key === 'Enter' && handleSubmit()}
-                  className="w-full border border-ink-200 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-plum-500"
-                  placeholder="••••••••"
-                />
-              </div>
-
-              <button
-                onClick={handleSubmit}
-                disabled={loading}
-                className="w-full bg-gradient-to-r from-plum-600 to-plum-700 hover:from-plum-700 hover:to-plum-800 text-white font-semibold py-4 rounded-xl transition-all disabled:opacity-50 shadow-lg shadow-plum-900/20 mt-3 text-base"
-              >
-                {loading ? 'Bekleyin...' : isRegister ? 'Kayıt Ol' : 'Giriş Yap'}
-              </button>
+          {error && (
+            <div className="flex items-start gap-2.5 bg-red-50 border border-red-100 rounded-xl p-3.5 mb-5">
+              <AlertCircle size={18} className="text-red-500 shrink-0 mt-0.5" />
+              <p className="text-red-600 text-sm leading-snug">{error}</p>
             </div>
+          )}
+
+          <div className="space-y-5">
+            {isRegister && (
+              <div>
+                <label className="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-2">Ad Soyad</label>
+                <input
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  className="w-full h-[52px] rounded-[14px] border border-[#E5E7EB] px-4 text-sm text-[#1F2937] placeholder-gray-400 transition-all duration-200 focus:outline-none focus:border-[#4F6BFF] focus:ring-4 focus:ring-[#4F6BFF]/10"
+                  placeholder="Ad Soyad"
+                />
+              </div>
+            )}
+            <div>
+              <label className="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-2">E-Posta</label>
+              <input
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                className="w-full h-[52px] rounded-[14px] border border-[#E5E7EB] px-4 text-sm text-[#1F2937] placeholder-gray-400 transition-all duration-200 focus:outline-none focus:border-[#4F6BFF] focus:ring-4 focus:ring-[#4F6BFF]/10"
+                placeholder="ornek@email.com"
+              />
+            </div>
+            <div>
+              <label className="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-2">Şifre</label>
+              <input
+                type="password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && handleSubmit()}
+                className="w-full h-[52px] rounded-[14px] border border-[#E5E7EB] px-4 text-sm text-[#1F2937] placeholder-gray-400 transition-all duration-200 focus:outline-none focus:border-[#4F6BFF] focus:ring-4 focus:ring-[#4F6BFF]/10"
+                placeholder="••••••••"
+              />
+            </div>
+
+            <button
+              onClick={handleSubmit}
+              disabled={loading}
+              className="w-full h-[54px] rounded-[14px] bg-gradient-to-r from-[#5B5FF7] to-[#2E63E9] text-white font-bold text-[15px] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#2E63E9]/30 disabled:opacity-50 disabled:hover:translate-y-0 mt-2"
+            >
+              {loading ? 'Bekleyin...' : isRegister ? 'Kayıt Ol' : 'Giriş Yap'}
+            </button>
           </div>
+
+          <p className="text-center text-sm text-gray-500 mt-7">
+            {isRegister ? 'Zaten hesabın var mı?' : 'Hesabın yok mu?'}
+            <button
+              onClick={() => { setIsRegister(!isRegister); setError('') }}
+              className="text-[#4F6BFF] font-semibold ml-1.5 hover:underline transition-all duration-200"
+            >
+              {isRegister ? 'Giriş Yap' : 'Kayıt Ol'}
+            </button>
+          </p>
         </div>
 
-        <div className="stitch-gold w-24 mx-auto mt-10 opacity-70" />
-        <p className="text-center text-plum-300/70 text-xs mt-4">
+        <p className="text-center text-gray-500 text-xs mt-8">
           TerziPro v1.0 · Tüm hakları saklıdır
         </p>
       </div>
