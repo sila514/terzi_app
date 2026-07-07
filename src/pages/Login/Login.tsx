@@ -36,15 +36,15 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#1e1b4b] via-[#2e1065] to-[#1e1b4b] flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-plum-950 flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         {/* Logo & Başlık */}
         <div className="flex flex-col items-center mb-8 text-center">
-          <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-purple-900/50 mb-5">
+          <div className="w-20 h-20 bg-gradient-to-br from-plum-500 to-plum-700 rounded-2xl flex items-center justify-center shadow-lg shadow-black/30 mb-5">
             <Scissors size={34} className="text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-white">TerziPro</h1>
-          <p className="text-purple-300 text-sm mt-1.5">Atölye Yönetim Sistemi</p>
+          <h1 className="font-display text-3xl font-semibold text-white">TerziPro</h1>
+          <p className="text-plum-300 text-sm mt-1.5">Atölye Yönetim Sistemi</p>
         </div>
 
         {/* Kart */}
@@ -54,7 +54,7 @@ export default function Login() {
             <button
               onClick={() => { setIsRegister(false); setError('') }}
               className={`flex-1 py-3 rounded-xl text-sm font-semibold transition-all ${
-                !isRegister ? 'bg-gray-100 text-gray-800' : 'text-gray-400 hover:text-gray-600'
+                !isRegister ? 'bg-ink-100 text-ink-900' : 'text-ink-400 hover:text-ink-600'
               }`}
             >
               Giriş Yap
@@ -62,7 +62,7 @@ export default function Login() {
             <button
               onClick={() => { setIsRegister(true); setError('') }}
               className={`flex-1 py-3 rounded-xl text-sm font-semibold transition-all ${
-                isRegister ? 'bg-gray-100 text-gray-800' : 'text-gray-400 hover:text-gray-600'
+                isRegister ? 'bg-ink-100 text-ink-900' : 'text-ink-400 hover:text-ink-600'
               }`}
             >
               Kayıt Ol
@@ -71,39 +71,39 @@ export default function Login() {
 
           <div className="px-8 pb-8 pt-3">
             {error && (
-              <div className="bg-red-50 text-red-600 p-3 rounded-xl mb-4 text-sm">{error}</div>
+              <div className="bg-rose-50 text-rose-600 p-3 rounded-xl mb-4 text-sm">{error}</div>
             )}
 
             <div className="space-y-5">
               {isRegister && (
                 <div>
-                  <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Ad Soyad</label>
+                  <label className="block text-xs font-semibold text-ink-500 uppercase tracking-wide mb-2">Ad Soyad</label>
                   <input
                     value={name}
                     onChange={e => setName(e.target.value)}
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full border border-ink-200 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-plum-500"
                     placeholder="Ad Soyad"
                   />
                 </div>
               )}
               <div>
-                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">E-Posta</label>
+                <label className="block text-xs font-semibold text-ink-500 uppercase tracking-wide mb-2">E-Posta</label>
                 <input
                   type="email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full border border-ink-200 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-plum-500"
                   placeholder="ornek@email.com"
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Şifre</label>
+                <label className="block text-xs font-semibold text-ink-500 uppercase tracking-wide mb-2">Şifre</label>
                 <input
                   type="password"
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   onKeyDown={e => e.key === 'Enter' && handleSubmit()}
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full border border-ink-200 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-plum-500"
                   placeholder="••••••••"
                 />
               </div>
@@ -111,7 +111,7 @@ export default function Login() {
               <button
                 onClick={handleSubmit}
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-semibold py-4 rounded-xl transition-all disabled:opacity-50 shadow-lg shadow-purple-900/20 mt-3 text-base"
+                className="w-full bg-gradient-to-r from-plum-600 to-plum-700 hover:from-plum-700 hover:to-plum-800 text-white font-semibold py-4 rounded-xl transition-all disabled:opacity-50 shadow-lg shadow-plum-900/20 mt-3 text-base"
               >
                 {loading ? 'Bekleyin...' : isRegister ? 'Kayıt Ol' : 'Giriş Yap'}
               </button>
@@ -119,7 +119,8 @@ export default function Login() {
           </div>
         </div>
 
-        <p className="text-center text-purple-300/70 text-xs mt-10">
+        <div className="stitch-gold w-24 mx-auto mt-10 opacity-70" />
+        <p className="text-center text-plum-300/70 text-xs mt-4">
           TerziPro v1.0 · Tüm hakları saklıdır
         </p>
       </div>
