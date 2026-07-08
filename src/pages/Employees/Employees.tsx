@@ -46,7 +46,7 @@ export default function Employees() {
   }
 
   return (
-    <div className="p-6 md:p-10 mt-12 md:mt-0">
+    <div className="p-8 md:p-14 mt-12 md:mt-0">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="font-display text-2xl md:text-3xl font-semibold text-ink-900">Çalışan Yönetimi</h1>
@@ -58,7 +58,7 @@ export default function Employees() {
       </div>
       <div className="stitch mb-7" />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-7">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
         {employees.map(emp => (
           <div key={emp.id} className="bg-white rounded-2xl p-6 shadow-sm border border-ink-100">
             <div className="flex items-center gap-3 mb-5">

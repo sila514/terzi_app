@@ -26,17 +26,17 @@ export default function Dashboard() {
   ]
 
   return (
-    <div className="p-6 md:p-10 bg-paper min-h-screen">
-      <div className="mb-6 md:mb-7">
+    <div className="p-8 md:p-14 bg-paper min-h-screen">
+      <div className="mb-7 md:mb-8">
         <h1 className="font-display text-2xl md:text-3xl font-semibold text-ink-900">Hoş geldiniz, {user.name} 👋</h1>
         <p className="text-ink-400 mt-1.5 text-sm">{today}</p>
       </div>
-      <div className="stitch mb-8 md:mb-10" />
+      <div className="stitch mb-9 md:mb-12" />
 
       {/* Stat Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-6 mb-8 md:mb-10">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mb-9 md:mb-12">
         {statCards.map(({ label, value, icon: Icon, tint, sub }) => (
-          <div key={label} className="bg-white rounded-2xl p-5 md:p-6 shadow-sm border border-ink-100 hover:shadow-md transition-shadow">
+          <div key={label} className="bg-white rounded-2xl p-6 md:p-7 shadow-sm border border-ink-100 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between mb-4 md:mb-5">
               <p className="text-xs md:text-sm text-ink-500 font-medium">{label}</p>
               <div className={`w-9 h-9 md:w-11 md:h-11 rounded-xl flex items-center justify-center ${tint}`}>
@@ -50,8 +50,8 @@ export default function Dashboard() {
       </div>
 
       {/* Charts */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 mb-8 md:mb-10">
-        <div className="md:col-span-2 bg-white rounded-2xl p-5 md:p-7 shadow-sm border border-ink-100">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-9 md:mb-12">
+        <div className="md:col-span-2 bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-ink-100">
           <div className="flex items-center justify-between mb-4 md:mb-6">
             <div>
               <h2 className="font-semibold text-ink-900 text-sm md:text-base">Gelir & Gider Trendi</h2>
@@ -84,7 +84,7 @@ export default function Dashboard() {
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-white rounded-2xl p-5 md:p-7 shadow-sm border border-ink-100">
+        <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-ink-100">
           <h2 className="font-semibold text-ink-900 mb-1 text-sm md:text-base">Sipariş Durumu</h2>
           <p className="text-xs text-ink-400 mb-5 md:mb-7">Mevcut durum dağılımı</p>
           <div className="space-y-5">
@@ -108,8 +108,8 @@ export default function Dashboard() {
       </div>
 
       {/* Alt Row */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
-        <div className="bg-white rounded-2xl p-5 md:p-7 shadow-sm border border-ink-100">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-ink-100">
           <div className="flex items-center gap-2 mb-5">
             <AlertTriangle size={16} className="text-rose-500" />
             <h2 className="font-semibold text-ink-900 text-sm md:text-base">Geciken Siparişler</h2>
@@ -138,7 +138,7 @@ export default function Dashboard() {
           )}
         </div>
 
-        <div className="bg-white rounded-2xl p-5 md:p-7 shadow-sm border border-ink-100">
+        <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-ink-100">
           <div className="flex items-center gap-2 mb-5">
             <CheckCircle size={16} className="text-emerald-500" />
             <h2 className="font-semibold text-ink-900 text-sm md:text-base">Bugünkü Teslimler</h2>

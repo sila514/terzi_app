@@ -47,7 +47,7 @@ export default function Accounting() {
   ]
 
   return (
-    <div className="p-6 md:p-10 mt-12 md:mt-0">
+    <div className="p-8 md:p-14 mt-12 md:mt-0">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="font-display text-2xl md:text-3xl font-semibold text-ink-900">Muhasebe & Raporlama</h1>
@@ -59,7 +59,7 @@ export default function Accounting() {
       </div>
       <div className="stitch mb-7" />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-7 mb-8 md:mb-10">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-9 md:mb-12">
         <div className="bg-white rounded-2xl p-6 shadow-sm border border-ink-100">
           <div className="flex items-center gap-2 mb-3">
             <TrendingUp size={18} className="text-green-500" />
@@ -83,7 +83,7 @@ export default function Accounting() {
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl p-5 md:p-7 shadow-sm border border-ink-100 mb-8 md:mb-10">
+      <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-ink-100 mb-9 md:mb-12">
         <h2 className="font-semibold text-ink-900 mb-5">Gelir & Gider Grafiği</h2>
         <ResponsiveContainer width="100%" height={240}>
           <AreaChart data={monthly}>
@@ -117,7 +117,7 @@ export default function Accounting() {
           ))}
         </div>
 
-        <div className="p-5 md:p-7">
+        <div className="p-6 md:p-8">
           {activeTab === 'unpaid' && (
             <div className="space-y-3">
               {!summary?.unpaidOrders?.length ? (

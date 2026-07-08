@@ -38,7 +38,7 @@ export default function Gallery() {
   }
 
   return (
-    <div className="p-6 md:p-10 mt-12 md:mt-0">
+    <div className="p-8 md:p-14 mt-12 md:mt-0">
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
         <div>
           <h1 className="font-display text-2xl md:text-3xl font-semibold text-ink-900">Sipariş Fotoğrafları</h1>

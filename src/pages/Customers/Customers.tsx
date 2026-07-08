@@ -106,7 +106,7 @@ export default function Customers() {
   }
 
   return (
-    <div className="p-6 md:p-10 mt-12 md:mt-0">
+    <div className="p-8 md:p-14 mt-12 md:mt-0">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="font-display text-2xl md:text-3xl font-semibold text-ink-900">Müşteri & Sipariş Takibi</h1>
@@ -132,16 +132,16 @@ export default function Customers() {
         <table className="w-full min-w-[500px]">
           <thead className="bg-ink-50 border-b border-ink-100">
             <tr>
-              <th className="text-left px-5 md:px-7 py-5 text-xs font-semibold text-ink-500 uppercase">Müşteri</th>
-              <th className="text-left px-5 md:px-7 py-5 text-xs font-semibold text-ink-500 uppercase">Telefon</th>
-              <th className="text-left px-5 md:px-7 py-5 text-xs font-semibold text-ink-500 uppercase">Sipariş</th>
-              <th className="px-5 md:px-7 py-5"></th>
+              <th className="text-left px-6 md:px-8 py-6 text-xs font-semibold text-ink-500 uppercase">Müşteri</th>
+              <th className="text-left px-6 md:px-8 py-6 text-xs font-semibold text-ink-500 uppercase">Telefon</th>
+              <th className="text-left px-6 md:px-8 py-6 text-xs font-semibold text-ink-500 uppercase">Sipariş</th>
+              <th className="px-6 md:px-8 py-6"></th>
             </tr>
           </thead>
           <tbody className="divide-y divide-ink-100">
             {customers.map(c => (
               <tr key={c.id} onClick={() => loadCustomer(c.id)} className="hover:bg-plum-50 cursor-pointer transition-colors">
-                <td className="px-5 md:px-7 py-5">
+                <td className="px-6 md:px-8 py-6">
                   <div className="flex items-center gap-3">
                     <div className="w-9 h-9 md:w-10 md:h-10 bg-plum-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
                       {c.name.charAt(0)}
@@ -149,9 +149,9 @@ export default function Customers() {
                     <span className="font-medium text-ink-900 text-sm md:text-base">{c.name}</span>
                   </div>
                 </td>
-                <td className="px-5 md:px-7 py-5 text-sm text-ink-600">{c.phone || '-'}</td>
-                <td className="px-5 md:px-7 py-5 text-sm text-ink-600">{c.orders?.length || 0}</td>
-                <td className="px-5 md:px-7 py-5 text-right"><ChevronRight size={18} className="text-ink-400 ml-auto" /></td>
+                <td className="px-6 md:px-8 py-6 text-sm text-ink-600">{c.phone || '-'}</td>
+                <td className="px-6 md:px-8 py-6 text-sm text-ink-600">{c.orders?.length || 0}</td>
+                <td className="px-6 md:px-8 py-6 text-right"><ChevronRight size={18} className="text-ink-400 ml-auto" /></td>
               </tr>
             ))}
           </tbody>
@@ -162,7 +162,7 @@ export default function Customers() {
       {selected && (
         <div className="fixed inset-0 bg-black/30 flex justify-end z-50">
           <div className="w-full md:w-[600px] bg-white h-full overflow-y-auto shadow-2xl">
-            <div className="p-5 md:p-7 border-b border-ink-100 flex items-center justify-between sticky top-0 bg-white z-10">
+            <div className="p-6 md:p-8 border-b border-ink-100 flex items-center justify-between sticky top-0 bg-white z-10">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 md:w-11 md:h-11 bg-plum-600 rounded-full flex items-center justify-center text-white font-bold">
                   {selected.name.charAt(0)}
@@ -180,7 +180,7 @@ export default function Customers() {
               </div>
             </div>
 
-            <div className="p-5 md:p-7">
+            <div className="p-6 md:p-8">
               <h3 className="font-semibold text-ink-900 mb-4">Ölçü Kartı</h3>
               <div className="grid grid-cols-3 gap-3 md:gap-4 mb-8">
                 {[['Göğüs', selected.chest], ['Bel', selected.waist], ['Kalça', selected.hip], ['Omuz', selected.shoulder], ['Boy', selected.height], ['Kol Boyu', selected.armLength]].map(([label, val]) => (

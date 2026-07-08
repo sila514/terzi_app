@@ -18,14 +18,14 @@ export default function Settings() {
   }
 
   return (
-    <div className="p-6 md:p-10 mt-12 md:mt-0">
-      <div className="mb-6 md:mb-7">
+    <div className="p-8 md:p-14 mt-12 md:mt-0">
+      <div className="mb-7 md:mb-8">
         <h1 className="font-display text-2xl md:text-3xl font-semibold text-ink-900">Genel Ayarlar</h1>
         <p className="text-ink-500 text-sm mt-1.5">İşletme bilgileri ve hesap ayarları</p>
       </div>
-      <div className="stitch mb-8 md:mb-10" />
+      <div className="stitch mb-9 md:mb-12" />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-7 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-start">
         <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-ink-100">
           <h2 className="font-semibold text-ink-900 mb-5">Profil Bilgileri</h2>
           <div className="flex items-center gap-4 mb-7">
