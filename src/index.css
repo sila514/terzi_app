@@ -1,46 +1,25 @@
 @import "tailwindcss";
 
 @theme {
-  /* Plum - marka rengi, terzi kadifesi tonu */
-  --color-plum-50: #F5F0FA;
-  --color-plum-100: #E8DCF3;
-  --color-plum-200: #D3BAE8;
-  --color-plum-300: #B58ED9;
-  --color-plum-400: #9563C4;
-  --color-plum-500: #7A44A8;
-  --color-plum-600: #5B2A86;
-  --color-plum-700: #47206B;
-  --color-plum-800: #351950;
-  --color-plum-900: #2E1546;
-  --color-plum-950: #1F0E30;
+  /* Marka mavisi - login ile birebir ayni */
+  --color-brand-50: #EEF1FF;
+  --color-brand-100: #E0E4FF;
+  --color-brand-200: #C7CDFE;
+  --color-brand-300: #A5AEFC;
+  --color-brand-400: #7C86F8;
+  --color-brand-500: #5B5FF7;
+  --color-brand-600: #4F6BFF;
+  --color-brand-700: #2E63E9;
+  --color-brand-800: #2748B8;
+  --color-brand-900: #1E1B4B;
 
-  /* Gold - iğne/düğme aksanı, çok kullanılmaz */
-  --color-gold-50: #FBF6EC;
-  --color-gold-100: #F3E2BD;
-  --color-gold-200: #E8C989;
-  --color-gold-300: #D6AA5C;
-  --color-gold-400: #C4913F;
-  --color-gold-500: #B8863B;
-  --color-gold-600: #9C6F2E;
-  --color-gold-700: #7C5824;
-  --color-gold-800: #5C411A;
+  /* Koyu lacivert - sidebar / login arka plani */
+  --color-navy-900: #141B34;
+  --color-navy-800: #1E2148;
+  --color-navy-700: #20254E;
 
-  /* Ink - sıcak nötr, gri yerine */
-  --color-ink-50: #F8F6F2;
-  --color-ink-100: #EFEBE3;
-  --color-ink-200: #DDD8CE;
-  --color-ink-300: #C4BCAC;
-  --color-ink-400: #9C9284;
-  --color-ink-500: #766C5E;
-  --color-ink-600: #5A5145;
-  --color-ink-700: #443D33;
-  --color-ink-800: #2E2822;
-  --color-ink-900: #221D2E;
+  --color-paper: #F8FAFC;
 
-  /* Kağıt - sayfa zemini */
-  --color-paper: #F6F4EF;
-
-  --font-display: "Fraunces", ui-serif, Georgia, serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
@@ -53,28 +32,5 @@
 body {
   font-family: var(--font-sans);
   background-color: var(--color-paper);
-  color: var(--color-ink-900);
-}
-
-/* Dikiş çizgisi - imza motif */
-.stitch {
-  height: 1px;
-  background-image: repeating-linear-gradient(
-    to right,
-    var(--color-ink-300) 0,
-    var(--color-ink-300) 5px,
-    transparent 5px,
-    transparent 11px
-  );
-}
-
-.stitch-gold {
-  height: 1px;
-  background-image: repeating-linear-gradient(
-    to right,
-    var(--color-gold-400) 0,
-    var(--color-gold-400) 5px,
-    transparent 5px,
-    transparent 11px
-  );
+  color: #1F2937;
 }

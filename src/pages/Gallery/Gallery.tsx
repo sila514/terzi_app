@@ -41,19 +41,19 @@ export default function Gallery() {
     <div className="p-8 md:p-14 mt-12 md:mt-0">
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
         <div>
-          <h1 className="font-display text-2xl md:text-3xl font-semibold text-ink-900">Sipariş Fotoğrafları</h1>
-          <p className="text-ink-500 text-sm mt-1.5">{withPhotos.length} fotoğraf</p>
+          <h1 className="text-2xl md:text-3xl font-semibold text-gray-900">Sipariş Fotoğrafları</h1>
+          <p className="text-gray-500 text-sm mt-1.5">{withPhotos.length} fotoğraf</p>
         </div>
         <div className="flex items-center gap-3">
           <select value={selectedOrder} onChange={e => setSelectedOrder(e.target.value)}
-            className="flex-1 md:flex-none border border-ink-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-plum-500">
+            className="flex-1 md:flex-none border border-gray-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-600">
             <option value="">Sipariş seç...</option>
             {orders.map(o => (
               <option key={o.id} value={o.id}>#{o.id} - {o.customer?.name}</option>
             ))}
           </select>
           <button onClick={() => fileRef.current?.click()} disabled={uploading}
-            className="flex items-center gap-2 bg-plum-600 hover:bg-plum-700 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition-all disabled:opacity-50">
+            className="flex items-center gap-2 bg-brand-700 hover:bg-brand-800 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition-all disabled:opacity-50">
             <Upload size={18} />
             <span className="hidden md:inline">{uploading ? 'Yükleniyor...' : 'Fotoğraf Ekle'}</span>
           </button>
@@ -61,31 +61,29 @@ export default function Gallery() {
         </div>
       </div>
 
-      <div className="stitch mb-6" />
-
       <div className="flex gap-2.5 mb-8 flex-wrap">
         <button onClick={() => setFilter('all')}
-          className={`px-4 md:px-5 py-2 md:py-2.5 rounded-full text-sm font-medium transition-all ${filter === 'all' ? 'bg-plum-600 text-white' : 'bg-white text-ink-600 border border-ink-200'}`}>
+          className={`px-4 md:px-5 py-2 md:py-2.5 rounded-full text-sm font-medium transition-all ${filter === 'all' ? 'bg-brand-700 text-white' : 'bg-white text-gray-600 border border-gray-200'}`}>
           Tümü
         </button>
         {withPhotos.map(o => (
           <button key={o.id} onClick={() => setFilter(String(o.id))}
-            className={`px-4 md:px-5 py-2 md:py-2.5 rounded-full text-sm font-medium transition-all ${filter === String(o.id) ? 'bg-plum-600 text-white' : 'bg-white text-ink-600 border border-ink-200'}`}>
+            className={`px-4 md:px-5 py-2 md:py-2.5 rounded-full text-sm font-medium transition-all ${filter === String(o.id) ? 'bg-brand-700 text-white' : 'bg-white text-gray-600 border border-gray-200'}`}>
             #{o.id}
           </button>
         ))}
       </div>
 
       {filtered.length === 0 ? (
-        <div className="bg-white rounded-2xl p-16 text-center shadow-sm border border-ink-100">
-          <Camera size={48} className="text-ink-300 mx-auto mb-4" />
-          <p className="text-ink-400">Henüz fotoğraf eklenmemiş</p>
-          <p className="text-sm text-ink-300 mt-1">Sipariş seçip fotoğraf ekleyebilirsiniz</p>
+        <div className="bg-white rounded-2xl p-16 text-center shadow-sm border border-gray-100">
+          <Camera size={48} className="text-gray-300 mx-auto mb-4" />
+          <p className="text-gray-400">Henüz fotoğraf eklenmemiş</p>
+          <p className="text-sm text-gray-300 mt-1">Sipariş seçip fotoğraf ekleyebilirsiniz</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {filtered.map(order => (
-            <div key={order.id} className="relative group rounded-2xl overflow-hidden bg-white shadow-sm border border-ink-100">
+            <div key={order.id} className="relative group rounded-2xl overflow-hidden bg-white shadow-sm border border-gray-100">
               <img src={order.photoUrl} alt={order.description} className="w-full h-56 md:h-64 object-cover" />
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all flex items-end">
                 <div className="p-4 text-white">
@@ -95,7 +93,7 @@ export default function Gallery() {
                 </div>
               </div>
               <div className="absolute top-3 left-3">
-                <span className="bg-plum-600 text-white text-xs px-2 py-1 rounded-full font-medium">#{order.id}</span>
+                <span className="bg-brand-700 text-white text-xs px-2 py-1 rounded-full font-medium">#{order.id}</span>
               </div>
             </div>
           ))}
