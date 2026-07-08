@@ -41,23 +41,23 @@ export default function Login() {
       <div className="pointer-events-none absolute top-[-10%] left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full bg-[#4F6BFF]/20 blur-[120px]" />
       <div className="pointer-events-none absolute bottom-[-15%] right-[-10%] w-[500px] h-[500px] rounded-full bg-[#5B5FF7]/10 blur-[120px]" />
 
-      <div className="relative w-[92%] sm:w-full sm:max-w-[540px] flex flex-col items-center">
+      <div className="relative w-[92%] sm:w-full sm:max-w-[640px] flex flex-col items-center">
         {/* Logo & Başlık */}
-        <div className="flex flex-col items-center mb-11 text-center">
-          <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#5B5FF7] to-[#2E63E9] flex items-center justify-center shadow-lg shadow-[#2E63E9]/30 mb-6">
-            <Scissors size={32} className="text-white" />
+        <div className="flex flex-col items-center mb-14 text-center">
+          <div className="w-24 h-24 rounded-[28px] bg-gradient-to-br from-[#5B5FF7] to-[#2E63E9] flex items-center justify-center shadow-lg shadow-[#2E63E9]/30 mb-7">
+            <Scissors size={40} className="text-white" />
           </div>
-          <h1 className="text-[36px] leading-tight font-bold text-white tracking-tight">TerziPro</h1>
-          <p className="text-gray-400 text-base mt-2">Atölye Yönetim Sistemi</p>
+          <h1 className="text-[44px] leading-tight font-bold text-white tracking-tight">TerziPro</h1>
+          <p className="text-gray-400 text-lg mt-3">Atölye Yönetim Sistemi</p>
         </div>
 
         {/* Kart */}
-        <div className="w-full bg-white rounded-[24px] shadow-[0_25px_70px_-20px_rgba(0,0,0,0.45)] border border-[#E5E7EB] p-8 sm:p-14">
+        <div className="w-full bg-white rounded-[24px] shadow-[0_25px_70px_-20px_rgba(0,0,0,0.45)] border border-[#E5E7EB] p-10 sm:p-16">
           {/* Sekmeler */}
-          <div className="flex bg-gray-100 rounded-2xl p-2 gap-2 mb-9">
+          <div className="flex bg-gray-100 rounded-2xl p-2.5 gap-2.5 mb-10">
             <button
               onClick={() => { setIsRegister(false); setError('') }}
-              className={`flex-1 py-4 rounded-xl text-base font-semibold transition-all duration-200 ${
+              className={`flex-1 py-5 rounded-xl text-lg font-semibold transition-all duration-200 ${
                 !isRegister ? 'bg-white text-[#1F2937] shadow-sm' : 'text-gray-500 hover:text-gray-700'
               }`}
             >
@@ -65,7 +65,7 @@ export default function Login() {
             </button>
             <button
               onClick={() => { setIsRegister(true); setError('') }}
-              className={`flex-1 py-4 rounded-xl text-base font-semibold transition-all duration-200 ${
+              className={`flex-1 py-5 rounded-xl text-lg font-semibold transition-all duration-200 ${
                 isRegister ? 'bg-white text-[#1F2937] shadow-sm' : 'text-gray-500 hover:text-gray-700'
               }`}
             >
@@ -74,42 +74,42 @@ export default function Login() {
           </div>
 
           {error && (
-            <div className="flex items-start gap-2.5 bg-red-50 border border-red-100 rounded-xl p-4 mb-7">
+            <div className="flex items-start gap-2.5 bg-red-50 border border-red-100 rounded-xl p-5 mb-8">
               <AlertCircle size={18} className="text-red-500 shrink-0 mt-0.5" />
               <p className="text-red-600 text-sm leading-snug">{error}</p>
             </div>
           )}
 
-          <div className="space-y-7">
+          <div className="space-y-8">
             {isRegister && (
               <div>
-                <label className="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-2.5">Ad Soyad</label>
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Ad Soyad</label>
                 <input
                   value={name}
                   onChange={e => setName(e.target.value)}
-                  className="w-full h-[56px] rounded-[14px] border border-[#E5E7EB] px-4 text-sm text-[#1F2937] placeholder-gray-400 transition-all duration-200 focus:outline-none focus:border-[#4F6BFF] focus:ring-4 focus:ring-[#4F6BFF]/10"
+                  className="w-full h-[64px] rounded-[16px] border border-[#E5E7EB] px-5 text-base text-[#1F2937] placeholder-gray-400 transition-all duration-200 focus:outline-none focus:border-[#4F6BFF] focus:ring-4 focus:ring-[#4F6BFF]/10"
                   placeholder="Ad Soyad"
                 />
               </div>
             )}
             <div>
-              <label className="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-2.5">E-Posta</label>
+              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">E-Posta</label>
               <input
                 type="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                className="w-full h-[56px] rounded-[14px] border border-[#E5E7EB] px-4 text-sm text-[#1F2937] placeholder-gray-400 transition-all duration-200 focus:outline-none focus:border-[#4F6BFF] focus:ring-4 focus:ring-[#4F6BFF]/10"
+                className="w-full h-[64px] rounded-[16px] border border-[#E5E7EB] px-5 text-base text-[#1F2937] placeholder-gray-400 transition-all duration-200 focus:outline-none focus:border-[#4F6BFF] focus:ring-4 focus:ring-[#4F6BFF]/10"
                 placeholder="ornek@email.com"
               />
             </div>
             <div>
-              <label className="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-2.5">Şifre</label>
+              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Şifre</label>
               <input
                 type="password"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && handleSubmit()}
-                className="w-full h-[56px] rounded-[14px] border border-[#E5E7EB] px-4 text-sm text-[#1F2937] placeholder-gray-400 transition-all duration-200 focus:outline-none focus:border-[#4F6BFF] focus:ring-4 focus:ring-[#4F6BFF]/10"
+                className="w-full h-[64px] rounded-[16px] border border-[#E5E7EB] px-5 text-base text-[#1F2937] placeholder-gray-400 transition-all duration-200 focus:outline-none focus:border-[#4F6BFF] focus:ring-4 focus:ring-[#4F6BFF]/10"
                 placeholder="••••••••"
               />
             </div>
@@ -117,13 +117,13 @@ export default function Login() {
             <button
               onClick={handleSubmit}
               disabled={loading}
-              className="w-full h-[58px] rounded-[14px] bg-gradient-to-r from-[#5B5FF7] to-[#2E63E9] text-white font-bold text-[15px] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#2E63E9]/30 disabled:opacity-50 disabled:hover:translate-y-0 mt-2"
+              className="w-full h-[66px] rounded-[16px] bg-gradient-to-r from-[#5B5FF7] to-[#2E63E9] text-white font-bold text-lg transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#2E63E9]/30 disabled:opacity-50 disabled:hover:translate-y-0 mt-2"
             >
               {loading ? 'Bekleyin...' : isRegister ? 'Kayıt Ol' : 'Giriş Yap'}
             </button>
           </div>
 
-          <p className="text-center text-sm text-gray-500 mt-9">
+          <p className="text-center text-base text-gray-500 mt-10">
             {isRegister ? 'Zaten hesabın var mı?' : 'Hesabın yok mu?'}
             <button
               onClick={() => { setIsRegister(!isRegister); setError('') }}
@@ -134,7 +134,7 @@ export default function Login() {
           </p>
         </div>
 
-        <p className="text-center text-gray-500 text-xs mt-8">
+        <p className="text-center text-gray-500 text-sm mt-10">
           TerziPro v1.0 · Tüm hakları saklıdır
         </p>
       </div>
