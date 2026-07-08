@@ -52,12 +52,12 @@ export default function Login() {
         </div>
 
         {/* Kart */}
-        <div className="w-full bg-white rounded-[24px] shadow-[0_25px_70px_-20px_rgba(0,0,0,0.45)] border border-[#E5E7EB] p-8 sm:p-12">
+        <div className="w-full bg-white rounded-[24px] shadow-[0_25px_70px_-20px_rgba(0,0,0,0.45)] border border-[#E5E7EB] p-8 sm:p-14">
           {/* Sekmeler */}
-          <div className="flex bg-gray-100 rounded-2xl p-2 gap-2 mb-8">
+          <div className="flex bg-gray-100 rounded-2xl p-2 gap-2 mb-9">
             <button
               onClick={() => { setIsRegister(false); setError('') }}
-              className={`flex-1 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${
+              className={`flex-1 py-4 rounded-xl text-base font-semibold transition-all duration-200 ${
                 !isRegister ? 'bg-white text-[#1F2937] shadow-sm' : 'text-gray-500 hover:text-gray-700'
               }`}
             >
@@ -65,7 +65,7 @@ export default function Login() {
             </button>
             <button
               onClick={() => { setIsRegister(true); setError('') }}
-              className={`flex-1 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${
+              className={`flex-1 py-4 rounded-xl text-base font-semibold transition-all duration-200 ${
                 isRegister ? 'bg-white text-[#1F2937] shadow-sm' : 'text-gray-500 hover:text-gray-700'
               }`}
             >
@@ -74,13 +74,13 @@ export default function Login() {
           </div>
 
           {error && (
-            <div className="flex items-start gap-2.5 bg-red-50 border border-red-100 rounded-xl p-4 mb-6">
+            <div className="flex items-start gap-2.5 bg-red-50 border border-red-100 rounded-xl p-4 mb-7">
               <AlertCircle size={18} className="text-red-500 shrink-0 mt-0.5" />
               <p className="text-red-600 text-sm leading-snug">{error}</p>
             </div>
           )}
 
-          <div className="space-y-6">
+          <div className="space-y-7">
             {isRegister && (
               <div>
                 <label className="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-2.5">Ad Soyad</label>
@@ -123,7 +123,7 @@ export default function Login() {
             </button>
           </div>
 
-          <p className="text-center text-sm text-gray-500 mt-7">
+          <p className="text-center text-sm text-gray-500 mt-9">
             {isRegister ? 'Zaten hesabın var mı?' : 'Hesabın yok mu?'}
             <button
               onClick={() => { setIsRegister(!isRegister); setError('') }}
